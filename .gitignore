@@ -10,5 +10,5 @@ __pycache__/
 # Arquivos de banco de dados temporários
 db.sqlite3
 
-# Arquivos do VSCode (se você usar)
+# Arquivos do VSCode
 .vscode/

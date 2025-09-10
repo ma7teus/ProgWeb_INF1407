@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "meu_app",
+    "carros",
+    "usuarios",
 ]
 
 AUTH_USER_MODEL = 'usuarios.Usuario'

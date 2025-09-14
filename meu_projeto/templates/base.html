@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Locadora de Carros{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Início</a></li>
+                <li><a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
+                </li>
+                <li><a href="#">Minha Conta</a></li>
+                <li><a href="#">Entrar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conteúdo -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Locadora de Carros</p>
+    </footer>
+</body>
+</html>

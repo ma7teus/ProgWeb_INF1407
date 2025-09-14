@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .models import Carro
 
-# Register your models here.
 @admin.register(Carro)
 class CarroAdmin(admin.ModelAdmin):
-    list_display = ("marca", "modelo", "ano", "preco", "criado_em")
+    list_display = ("placa", "marca", "modelo", "ano", "diaria", "locatario", "criado_em")
+    search_fields = ("placa", "marca", "modelo")
+    list_filter = ("ano",)
+    autocomplete_fields = ("locatario",)

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Carros disponíveis{% endblock %}
+
+{% block content %}
+<h1>Carros disponíveis</h1>
+
+{% if carros %}
+  <ul>
+    {% for c in carros %}
+      <li>
+        <strong>{{ c.marca }} {{ c.modelo }}</strong> — {{ c.ano }} |
+        Diária: R$ {{ c.diaria }}
+        {% if c.imagem %}
+          <br><img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" style="max-width:200px;margin-top:8px;">
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Nenhum carro disponível no momento.</p>
+{% endif %}
+{% endblock %}

@@ -69,9 +69,7 @@ a.button, button {
     transition: background 0.3s;
 }
 
-a.button:hover, button:hover {
-    background: #0097a7;
-}
+
 
 /* Rodapé */
 footer {
@@ -80,4 +78,74 @@ footer {
     margin-top: 40px;
     background: #222;
     color: #fff;
+}
+
+.button-danger { background:#d32f2f; }
+.button-danger:hover { background:#b71c1c; }
+.button-warning { background:#f57c00; }
+.button-warning:hover { background:#ef6c00; }
+/* GRID de carros */
+.cars-grid {
+    display: grid;
+    grid-template-columns: 1fr;        /* 1 coluna no mobile */
+    gap: 24px;
+  }
+  
+  /* a partir de ~900px, usa 2 colunas */
+  @media (min-width: 900px) {
+    .cars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Card de carro */
+  .car-card {
+    display: grid;
+    grid-template-columns: 180px 1fr;   /* imagem + info */
+    gap: 16px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    padding: 16px;
+    align-items: start;
+  }
+  
+  .car-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .car-title {
+    margin-bottom: 6px;
+  }
+  
+  .car-meta {
+    color: #555;
+    margin-bottom: 12px;
+  }
+  
+  .car-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Ajuste para telas bem estreitas: card vira coluna */
+  @media (max-width: 520px) {
+    .car-card {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+
+/* Botão verde para cadastrar */
+.button-success {
+    background: #4CAF50;   /* verde padrão */
+    margin-bottom: 30px; 
+
+}
+
+.button-success:hover {
+    background: #388E3C;   /* verde mais escuro no hover */
 }

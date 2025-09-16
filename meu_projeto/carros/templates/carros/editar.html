@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Editar carro {{ carro.placa }}{% endblock %}
+
+{% block content %}
+<h1>Editar carro — {{ carro.marca }} {{ carro.modelo }} ({{ carro.placa }})</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div style="color:#b71c1c;margin-bottom:10px;">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <label>Placa</label>
+      {{ form.placa }}
+      {{ form.placa.errors }}
+    </div>
+    <div>
+      <label>Marca</label>
+      {{ form.marca }} {{ form.marca.errors }}
+    </div>
+    <div>
+      <label>Modelo</label>
+      {{ form.modelo }} {{ form.modelo.errors }}
+    </div>
+    <div>
+      <label>Ano</label>
+      {{ form.ano }} {{ form.ano.errors }}
+    </div>
+    <div>
+      <label>Diária (R$)</label>
+      {{ form.diaria }} {{ form.diaria.errors }}
+    </div>
+    <div style="grid-column:1 / -1;">
+      <label>Descrição</label>
+      {{ form.descricao }} {{ form.descricao.errors }}
+    </div>
+    <div>
+      <label>Imagem</label>
+      {{ form.imagem }} {{ form.imagem.errors }}
+    </div>
+    {% if form.locatario %}
+    <div>
+      <label>Locatário (opcional)</label>
+      {{ form.locatario }} {{ form.locatario.errors }}
+    </div>
+    {% endif %}
+  </div>
+
+  <button type="submit" class="button">Salvar alterações</button>
+  <a href="{% url 'carros:disponiveis' %}" class="button" style="background:#757575;">Cancelar</a>
+</form>
+{% endblock %}

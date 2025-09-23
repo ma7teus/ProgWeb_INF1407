@@ -1,43 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Locadora de Carros{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
     <!-- Navbar -->
     <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Início</a></li>
-                <li><a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
-                </li>
-                <li><a href="#">Minha Conta</a></li>
-                <li><a href="#">Entrar</a></li>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li><a href="{% url 'home' %}">Início</a></li>
+          <li>
+            <a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
+          </li>
+          <li><a>{{username}}</a></li>
+            <li>
+                <form method="post" action="{% url 'usuarios:logout' %}" class="navbar-form">
+                    {% csrf_token %}
+                    <button type="submit">Sair</button>
+                </form>
+            </li>
+            
+        </ul>
+      </nav>
     </header>
 
     <!-- Conteúdo -->
     <main>
-        {% if messages %}
-        <ul style="margin:0 0 12px 0; padding:0; list-style:none;">
+      {% if messages %}
+      <ul style="margin: 0 0 12px 0; padding: 0; list-style: none">
         {% for message in messages %}
-            <li style="background:#e8f5e9; border:1px solid #a5d6a7; padding:8px 12px; border-radius:6px; margin-bottom:6px;">
-            {{ message }}
-            </li>
+        <li
+          style="
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+          "
+        >
+          {{ message }}
+        </li>
         {% endfor %}
-        </ul>
-        {% endif %}
-        {% block content %}{% endblock %}
+      </ul>
+      {% endif %} {% block content %}{% endblock %}
     </main>
 
     <!-- Rodapé -->
     <footer>
-        <p>Locadora de Carros</p>
+      <p>Locadora de Carros</p>
     </footer>
-</body>
+  </body>
 </html>

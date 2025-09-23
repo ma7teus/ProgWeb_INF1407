@@ -5,15 +5,7 @@ from .models import Usuario
 # Register your models here.
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    model = Usuario
-    
-    list_display = ("username", "email", "is_admin", "telefone", "cpf", "data_nascimento", "cidade", "estado")
-    
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('is_admin', 'telefone', 'cpf', 'data_nascimento', 'endereco', 'cidade', 'estado')}),
-    )
+    model = Usuario  
+    list_display = ("username", "email", "is_admin")
 
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('is_admin', 'telefone', 'cpf', 'data_nascimento', 'endereco', 'cidade', 'estado')}),
-    )
 

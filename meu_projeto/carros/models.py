@@ -11,8 +11,10 @@ class Carro(models.Model):
     # NOVO: Placa
     placa = models.CharField(
         max_length=7,
-        unique=True,  # troque para primary_key=True se quiser placa como PK
-        validators=[RegexValidator(PLACA_REGEX, message="Placa inválida.")]
+        primary_key=True,   # ⬅️ agora é a PK
+        validators=[RegexValidator(PLACA_REGEX, message="Placa inválida.")],
+        help_text="Ex.: ABC1234 ou ABC1D23"
+
     )
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50)

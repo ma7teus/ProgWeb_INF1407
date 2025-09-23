@@ -1,22 +1,38 @@
 {% extends "base.html" %}
-
 {% block title %}Carros disponíveis{% endblock %}
 
 {% block content %}
 <h1>Carros disponíveis</h1>
 
+<form method="get" action="{% url 'carros:cadastrar' %}" style="display:inline;">
+  <button type="submit" class="button button-success">Cadastrar novo carro</button>
+</form>
+
 {% if carros %}
-  <ul>
+  <div class="cars-grid">
     {% for c in carros %}
-      <li>
-        <strong>{{ c.marca }} {{ c.modelo }}</strong> — {{ c.ano }} |
-        Diária: R$ {{ c.diaria }}
+      <article class="car-card">
         {% if c.imagem %}
-          <br><img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" style="max-width:200px;margin-top:8px;">
+          <img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" class="car-img">
         {% endif %}
-      </li>
+
+        <div class="car-info">
+          <h3 class="car-title">{{ c.marca }} {{ c.modelo }}</h3>
+          <p class="car-meta">{{ c.ano }} &nbsp;|&nbsp; Diária: R$ {{ c.diaria }}</p>
+
+          <div class="car-actions">
+            <form method="get" action="{% url 'carros:editar' c.placa %}">
+              <button type="submit" class="button button-warning">Editar</button>
+            </form>
+            <form method="post" action="{% url 'carros:excluir' c.placa %}">
+              {% csrf_token %}
+              <button type="submit" class="button button-danger">Excluir</button>
+            </form>
+          </div>
+        </div>
+      </article>
     {% endfor %}
-  </ul>
+  </div>
 {% else %}
   <p>Nenhum carro disponível no momento.</p>
 {% endif %}

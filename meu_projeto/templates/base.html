@@ -23,6 +23,15 @@
 
     <!-- Conteúdo -->
     <main>
+        {% if messages %}
+        <ul style="margin:0 0 12px 0; padding:0; list-style:none;">
+        {% for message in messages %}
+            <li style="background:#e8f5e9; border:1px solid #a5d6a7; padding:8px 12px; border-radius:6px; margin-bottom:6px;">
+            {{ message }}
+            </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 

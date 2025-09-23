@@ -24,7 +24,7 @@ def carro_criar(request):
 @login_required
 def carros_disponiveis(request):
     carros = Carro.objects.filter(locatario__isnull=True).order_by("marca", "modelo")
-    return render(request, "carros/disponiveis.html", {"carros": carros})
+    return render(request, "carros/disponiveis.html", {"carros": carros, "is_admin": request.user.is_admin})
 
 @login_required
 @require_POST

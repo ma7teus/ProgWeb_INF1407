@@ -18,7 +18,6 @@
         <li>
           <a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
         </li>
-        <li><a>{{username}}</a></li>
         {% if user.is_authenticated %}
         <li class="logout">
           <form method="post" action="{% url 'usuarios:logout' %}" class="navbar-form">

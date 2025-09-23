@@ -4,36 +4,45 @@
 {% block content %}
 <h1>Carros disponíveis</h1>
 
+{% if is_admin %}
 <form method="get" action="{% url 'carros:cadastrar' %}" style="display:inline;">
   <button type="submit" class="button button-success">Cadastrar novo carro</button>
 </form>
+{% endif %}
 
 {% if carros %}
-  <div class="cars-grid">
-    {% for c in carros %}
-      <article class="car-card">
-        {% if c.imagem %}
-          <img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" class="car-img">
+<div class="cars-grid">
+  {% for c in carros %}
+  <article class="car-card">
+    {% if c.imagem %}
+    <img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" class="car-img">
+    {% endif %}
+
+    <div class="car-info">
+      <h3 class="car-title">{{ c.marca }} {{ c.modelo }}</h3>
+      <p class="car-meta">{{ c.ano }} &nbsp;|&nbsp; Diária: R$ {{ c.diaria }}</p>
+
+      <div class="car-actions">
+        {% if is_admin %}
+        <form method="get" action="{% url 'carros:editar' c.placa %}">
+          <button type="submit" class="button button-warning">Editar</button>
+        </form>
+        <form method="post" action="{% url 'carros:excluir' c.placa %}">
+          {% csrf_token %}
+          <button type="submit" class="button button-danger">Excluir</button>
+        </form>
+        {% else %}
+        <form>
+          {% csrf_token %}
+          <button type="submit" class="button button-save">Salvar</button>
+        </form>
         {% endif %}
-
-        <div class="car-info">
-          <h3 class="car-title">{{ c.marca }} {{ c.modelo }}</h3>
-          <p class="car-meta">{{ c.ano }} &nbsp;|&nbsp; Diária: R$ {{ c.diaria }}</p>
-
-          <div class="car-actions">
-            <form method="get" action="{% url 'carros:editar' c.placa %}">
-              <button type="submit" class="button button-warning">Editar</button>
-            </form>
-            <form method="post" action="{% url 'carros:excluir' c.placa %}">
-              {% csrf_token %}
-              <button type="submit" class="button button-danger">Excluir</button>
-            </form>
-          </div>
-        </div>
-      </article>
-    {% endfor %}
-  </div>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
 {% else %}
-  <p>Nenhum carro disponível no momento.</p>
+<p>Nenhum carro disponível no momento.</p>
 {% endif %}
 {% endblock %}

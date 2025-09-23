@@ -4,7 +4,10 @@
 <h1>Bem-vindo à nossa Locadora de Carros</h1>
 <p>Escolha entre diversos modelos disponíveis para você alugar com facilidade.</p>
 
+
 <a href="{% url 'carros:disponiveis' %}" class="button">Ver carros disponíveis</a>
+{% if is_admin %}
 <a href="{% url 'carros:cadastrar' %}" class="button">Cadastrar carros</a>
+{% endif %}
 
 {% endblock %}

@@ -7,15 +7,17 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Entrar</button>
-  </form>
-
+    <div>
+      <button type="submit">Entrar</button>
+    </form>
+      <form method="get" action="{% url 'usuarios:signup' %}">
+      <button type="submit" class="button button-success">Cadastre-se</button>
+    </form>
+    </div>
   {% if form.errors %}
     <p style="color:red;">Usuário ou senha incorretos.</p>
   {% endif %}
+  <p><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
+  
 
-  <p>Ainda não tem conta?</p>
-  <form method="get" action="{% url 'usuarios:signup' %}">
-    <button type="submit" class="button button-success">Cadastre-se</button>
-  </form>
 {% endblock %}

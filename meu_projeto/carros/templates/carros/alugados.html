@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Meus carros alugados{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1>Meus carros alugados</h1>
+<h1>{{ title }}</h1>
 
 {% if carros %}
   <div class="cars-grid">
@@ -14,13 +14,19 @@
         <div class="car-info">
           <h3 class="car-title">{{ c.marca }} {{ c.modelo }}</h3>
           <p class="car-meta">{{ c.ano }} &nbsp;|&nbsp; Diária: R$ {{ c.diaria }}</p>
-
+          {% if is_admin %}
+          <p class="car-renter">
+            <span class="renter-label">Locatário:</span>
+            <span class="renter-name">{{ c.locatario }}</span>
+          </p>
+          {% else %}
           <div class="car-actions">
             <form method="post" action="{% url 'carros:encerrar' c.placa %}">
               {% csrf_token %}
               <button type="submit" class="button button-danger">Encerrar aluguel</button>
             </form>
           </div>
+          {% endif %}
         </div>
       </article>
     {% endfor %}

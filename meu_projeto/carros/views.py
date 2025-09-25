@@ -76,8 +76,14 @@ def alugar_carro(request, placa):
 @login_required
 def carros_alugados(request):
     """Lista apenas os carros alugados pelo usuário logado."""
-    meus_carros = Carro.objects.filter(locatario=request.user).order_by("marca", "modelo")
-    return render(request, "carros/alugados.html", {"carros": meus_carros})
+    if request.user.is_admin:
+        title = "Carros alugados"
+        carros = Carro.objects.filter(locatario__isnull=False).order_by("marca", "modelo")
+    else:
+        title = "Meus carros alugados"
+        carros = Carro.objects.filter(locatario=request.user).order_by("marca", "modelo")
+    
+    return render(request, "carros/alugados.html", {"carros": carros, "title": title, "is_admin": request.user.is_admin})
 
 @login_required
 @require_POST

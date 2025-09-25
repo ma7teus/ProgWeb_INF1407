@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Meus carros alugados{% endblock %}
+
+{% block content %}
+<h1>Meus carros alugados</h1>
+
+{% if carros %}
+  <div class="cars-grid">
+    {% for c in carros %}
+      <article class="car-card">
+        {% if c.imagem %}
+          <img src="{{ c.imagem.url }}" alt="{{ c.modelo }}" class="car-img">
+        {% endif %}
+        <div class="car-info">
+          <h3 class="car-title">{{ c.marca }} {{ c.modelo }}</h3>
+          <p class="car-meta">{{ c.ano }} &nbsp;|&nbsp; Diária: R$ {{ c.diaria }}</p>
+
+          <div class="car-actions">
+            <form method="post" action="{% url 'carros:encerrar' c.placa %}">
+              {% csrf_token %}
+              <button type="submit" class="button button-danger">Encerrar aluguel</button>
+            </form>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Você ainda não alugou nenhum carro.</p>
+{% endif %}
+{% endblock %}

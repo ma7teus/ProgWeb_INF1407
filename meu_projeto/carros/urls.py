@@ -9,4 +9,8 @@ urlpatterns = [
     path("<str:placa>/excluir/", views.carro_excluir, name="excluir"),
     path("<str:placa>/editar/", views.carro_editar, name="editar"),  
 
+    path("<str:placa>/alugar/", views.alugar_carro, name="alugar"),
+    path("alugados/", views.carros_alugados, name="alugados"),
+    path("<str:placa>/encerrar/", views.encerrar_aluguel, name="encerrar"),
+
 ]

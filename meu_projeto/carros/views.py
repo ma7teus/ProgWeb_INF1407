@@ -54,3 +54,41 @@ def carro_editar(request, placa):
     else:
         form = CarroForm(instance=carro)
     return render(request, "carros/editar.html", {"form": form, "carro": carro})
+
+@login_required
+def alugar_carro(request, placa):
+    """Atribui o carro ao usuário logado, se estiver disponível."""
+    if request.method != "POST":
+        return redirect("carros:disponiveis")
+
+    carro = get_object_or_404(Carro, placa=placa)
+
+    if carro.locatario_id is not None:
+        messages.error(request, "Este carro já está alugado.")
+        return redirect("carros:disponiveis")
+
+    carro.locatario = request.user
+    carro.save()
+    messages.success(request, f"Você alugou o {carro.marca} {carro.modelo}.")
+    return redirect("carros:alugados")
+
+
+@login_required
+def carros_alugados(request):
+    """Lista apenas os carros alugados pelo usuário logado."""
+    meus_carros = Carro.objects.filter(locatario=request.user).order_by("marca", "modelo")
+    return render(request, "carros/alugados.html", {"carros": meus_carros})
+
+@login_required
+@require_POST
+def encerrar_aluguel(request, placa):
+    # Garante que só o dono (ou um admin) encerra
+    if request.user.is_staff:
+        carro = get_object_or_404(Carro, placa=placa)
+    else:
+        carro = get_object_or_404(Carro, placa=placa, locatario=request.user)
+
+    carro.locatario = None
+    carro.save()
+    messages.success(request, "Aluguel encerrado. O carro voltou para a lista de disponíveis.")
+    return redirect("carros:disponiveis")

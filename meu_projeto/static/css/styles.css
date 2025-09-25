@@ -196,3 +196,6 @@ footer {
   background: #388E3C;
   /* verde mais escuro no hover */
 }
+
+.button-save { background:#4CAF50; }
+.button-save:hover { background:#388E3C; }

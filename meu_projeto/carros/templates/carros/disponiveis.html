@@ -32,11 +32,11 @@
           <button type="submit" class="button button-danger">Excluir</button>
         </form>
         {% else %}
-        <form>
+        <form method="post" action="{% url 'carros:alugar' c.placa %}">
           {% csrf_token %}
-          <button type="submit" class="button button-save">Salvar</button>
+          <button type="submit" class="button button-save">Alugar</button>
         </form>
-        {% endif %}
+        {% endif %}        
       </div>
     </div>
   </article>

@@ -19,19 +19,24 @@
           <a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
         </li>
         {% if user.is_authenticated %}
+        <li><a href="{% url 'carros:alugados' %}">Alugados</a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
         <li class="logout">
           <form method="post" action="{% url 'usuarios:logout' %}" class="navbar-form">
             {% csrf_token %}
             <button class="logout-button" type="submit">Sair</button>
           </form>
         </li>
+        
+
         {% endif %}
 
       </ul>
     </nav>
   </header>
 
-  <!-- Conteúdo -->
   <main>
     {% if messages %}
     <ul style="margin: 0 0 12px 0; padding: 0; list-style: none">
@@ -50,7 +55,6 @@
     {% endif %} {% block content %}{% endblock %}
   </main>
 
-  <!-- Rodapé -->
   <footer>
     <p>Locadora de Carros</p>
   </footer>

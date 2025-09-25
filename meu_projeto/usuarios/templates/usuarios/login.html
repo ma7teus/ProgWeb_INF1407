@@ -13,4 +13,9 @@
   {% if form.errors %}
     <p style="color:red;">Usuário ou senha incorretos.</p>
   {% endif %}
+
+  <p>Ainda não tem conta?</p>
+  <form method="get" action="{% url 'usuarios:signup' %}">
+    <button type="submit" class="button button-success">Cadastre-se</button>
+  </form>
 {% endblock %}

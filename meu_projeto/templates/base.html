@@ -15,10 +15,10 @@
     <nav>
       <ul>
         <li><a href="{% url 'home' %}">Início</a></li>
+        {% if user.is_authenticated %}
         <li>
           <a href="{% url 'carros:disponiveis' %}">Carros disponíveis</a>
         </li>
-        {% if user.is_authenticated %}
         <li><a href="{% url 'carros:alugados' %}">Alugados</a></li>
         {% endif %}
 

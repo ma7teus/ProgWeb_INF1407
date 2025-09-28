@@ -4,20 +4,30 @@
 
 {% block content %}
   <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div>
+  <div class="login-container">
+    <form method="post" class="login-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+
       <button type="submit">Entrar</button>
+
+      {% if form.errors %}
+        <p class="error-msg">Usuário ou senha incorretos.</p>
+      {% endif %}
     </form>
-      <form method="get" action="{% url 'usuarios:signup' %}">
-      <button type="submit" class="button button-success">Cadastre-se</button>
-    </form>
-    </div>
-  {% if form.errors %}
-    <p style="color:red;">Usuário ou senha incorretos.</p>
-  {% endif %}
-  <p><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
+  </div>
+
+  <div class="extra-options">
+    <p><a href="{% url 'password_reset' %}" class="forgot-link">Esqueceu a senha?</a></p>
+    
+    <p class="signup-text">
+      Não tem conta?
+      <form method="get" action="{% url 'usuarios:signup' %}" style="display:inline;">
+        <button type="submit" class="btn-success">Cadastre-se</button>
+      </form>
+    </p>
+  </div>
+
   
 
 {% endblock %}

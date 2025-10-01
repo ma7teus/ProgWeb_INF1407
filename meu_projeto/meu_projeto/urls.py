@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from meu_app import views as pages  # sua home atual
+from meu_app import views as pages  
 from django.conf.urls.static import static
 from django.urls import reverse_lazy
 from django.conf import settings
@@ -14,8 +14,6 @@ urlpatterns = [
     path("carros/", include("carros.urls", namespace="carros")),
     path("usuarios/", include("usuarios.urls", namespace="usuarios")),
 
-        # --- Recuperação de senha (2 etapas) ---
-    # Etapa 1: pedir o reset e feedback "email enviado"
     path('accounts/password_reset/',
          PasswordResetView.as_view(
              template_name='seguranca/password_reset_form.html',
@@ -32,13 +30,12 @@ urlpatterns = [
          ),
          name='sec-password_reset_done'),
 
-    # Etapa 2: abrir link do email, criar nova senha e finalizar
     path('accounts/password_reset_confirm/<uidb64>/<token>/',
          PasswordResetConfirmView.as_view(
              template_name='seguranca/password_reset_confirm.html',
              success_url=reverse_lazy('sec-password_reset_complete')
          ),
-         name='password_reset_confirm'),   # sem namespace
+         name='password_reset_confirm'),
 
     path('accounts/password_reset_complete/',
          PasswordResetCompleteView.as_view(

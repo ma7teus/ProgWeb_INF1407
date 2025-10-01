@@ -1,12 +1,9 @@
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-/* Fonte e cores padrão */
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
@@ -15,7 +12,6 @@ body {
 
 }
 
-/* Navbar */
 header {
   background-color: #222;
   color: #fff;
@@ -42,7 +38,6 @@ nav ul li a:hover {
   color: #00bcd4;
 }
 
-/* Conteúdo */
 main {
   max-width: 1000px;
   margin: 40px auto;
@@ -54,14 +49,12 @@ main {
   overflow-y: auto;
 }
 
-/* Títulos */
 h1,
 h2,
 h3 {
   margin-bottom: 15px;
 }
 
-/* Botões/links */
 a.button,
 button {
   display: inline-block;
@@ -112,12 +105,12 @@ button {
 
 .login-form label {
   display: inline-block;
-  width: 70px;      /* largura fixa para todos os labels */
+  width: 70px;      
   font-weight: bold;
 }
 
 .login-form input {
-  flex: 1;          /* ocupa o resto do espaço */
+  flex: 1;          
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -136,12 +129,12 @@ button {
 
 .signup-form label {
   display: inline-block;
-  width: 200px;      /* largura fixa para todos os labels */
+  width: 200px;      
   font-weight: bold;
 }
 
 .signup-form input {
-  flex: 1;          /* ocupa o resto do espaço */
+  flex: 1;          
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -228,27 +221,21 @@ footer {
   background: #199400;
 }
 
-
-/* GRID de carros */
 .cars-grid {
   display: grid;
   grid-template-columns: 1fr;
-  /* 1 coluna no mobile */
   gap: 24px;
 }
 
-/* a partir de ~900px, usa 2 colunas */
 @media (min-width: 900px) {
   .cars-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Card de carro */
 .car-card {
   display: grid;
   grid-template-columns: 180px 1fr;
-  /* imagem + info */
   gap: 16px;
   background: #fff;
   border-radius: 10px;
@@ -282,44 +269,37 @@ footer {
 .car-renter {
   margin-top: 8px;
   padding: 6px 10px;
-  background: #f1f8ff;             /* fundo azul claro */
-  border-left: 4px solid #00bcd4;  /* borda de destaque */
+  background: #f1f8ff;             
+  border-left: 4px solid #00bcd4;  
   border-radius: 6px;
   font-size: 0.95rem;
   display: inline-block;
 }
 
 .renter-label {
-  color: #007a8c;   /* tom azul mais escuro */
+  color: #007a8c;
   margin-right: 4px;
 }
 
 .renter-name {
   font-weight: normal;
-  color: #333;      /* nome do usuário em cor neutra */
+  color: #333;     
 }
 
-
-
-/* Ajuste para telas bem estreitas: card vira coluna */
 @media (max-width: 520px) {
   .car-card {
     grid-template-columns: 1fr;
   }
 }
 
-
-/* Botão verde para cadastrar */
 .button-success {
   background: #4CAF50;
-  /* verde padrão */
   margin-bottom: 30px;
 
 }
 
 .button-success:hover {
   background: #388E3C;
-  /* verde mais escuro no hover */
 }
 
 .button-save { background:#4CAF50; }

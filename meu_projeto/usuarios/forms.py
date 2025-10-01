@@ -1,13 +1,13 @@
 from django.contrib.auth.forms import UserCreationForm
-from django import forms
 from .models import Usuario
-import re
-from django.core.exceptions import ValidationError
 
 class CustomUserCreationForm(UserCreationForm):
+    
+    """Formulário de criação de usuários customizados."""
+
     class Meta:
         model = Usuario 
-        fields = ("username", "email")  # e outros campos que você queira
+        fields = ("username", "email")
 
     def save(self, commit=True):
         user = super().save(commit=False)

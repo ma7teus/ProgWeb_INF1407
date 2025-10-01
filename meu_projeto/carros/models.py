@@ -8,10 +8,12 @@ from decimal import Decimal
 PLACA_REGEX = r'^[A-Z]{3}\d{4}$|^[A-Z]{3}\d[A-Z]\d{2}$'  # ABC1234 ou ABC1D23 (Mercosul)
 
 class Carro(models.Model):
-    # NOVO: Placa
+    
+    """Modelo que representa os veículos disponíveis para aluguel na locadora."""
+
     placa = models.CharField(
         max_length=7,
-        primary_key=True,   # ⬅️ agora é a PK
+        primary_key=True,
         validators=[RegexValidator(PLACA_REGEX, message="Placa inválida.")],
         help_text="Ex.: ABC1234 ou ABC1D23"
 

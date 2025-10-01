@@ -7,6 +7,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def carro_criar(request):
+    """Cria um novo carro no sistema.
+
+    - GET: exibe o formulário vazio.
+    - POST: valida e salva um novo registro; em sucesso, redireciona para a listagem
+      de disponíveis e mostra uma mensagem
+
+    Args:
+        request (HttpRequest): requisição HTTP
+
+    Returns:
+        HttpResponse: formulário ou redirecionamento para ``carros:disponiveis``
+    """
     if request.user.is_admin is False:
         messages.error(request, "Apenas administradores podem criar carros.")
         return redirect("carros:disponiveis")
@@ -23,23 +35,60 @@ def carro_criar(request):
 
 @login_required
 def carros_disponiveis(request):
+    """Renderiza a listagem de carros disponíveis para aluguel.
+
+    Retorna uma página com os veículos cujo campo ``locatario`` está vazio.
+    Se o usuário estiver autenticado, a página pode exibir ações (alugar/editar/excluir)
+    de acordo com as permissões configuradas.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+
+    Returns:
+        HttpResponse: template ``carros/disponiveis.html`` com o queryset de carros disponíveis.
+    """
     carros = Carro.objects.filter(locatario__isnull=True).order_by("marca", "modelo")
     return render(request, "carros/disponiveis.html", {"carros": carros, "is_admin": request.user.is_admin})
 
 @login_required
 @require_POST
-def carro_excluir(request, placa):   # use (request, pk) se for por id
+def carro_excluir(request, placa):
+    """Exclui um carro definitivamente.
+
+    Requer método POST por segurança (evita deleção via GET).
+    Após excluir, redireciona para a listagem de disponíveis.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+        placa (str): placa do veículo.
+
+    Returns:
+        HttpResponseRedirect: redireciona para ``carros:disponiveis``.
+    """
     if request.user.is_admin is False:
         messages.error(request, "Apenas administradores podem excluir carros.")
         return redirect("carros:disponiveis")
     
-    carro = get_object_or_404(Carro, placa=placa)  # ou get_object_or_404(Carro, pk=pk)
+    carro = get_object_or_404(Carro, placa=placa) 
     carro.delete()
     messages.success(request, "Carro excluído com sucesso.")
     return redirect("carros:disponiveis")
 
 @login_required
 def carro_editar(request, placa):
+    """Edita os dados de um carro existente.
+
+    Localiza o carro pela placa e:
+    - GET: exibe o formulário preenchido.
+    - POST: valida e salva alterações; em sucesso, redireciona para a listagem.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+        placa (str): placa do veículo (PK no modelo).
+
+    Returns:
+        HttpResponse: formulário de edição ou redirecionamento.
+    """
     if request.user.is_admin is False:
         messages.error(request, "Apenas administradores podem editar carros.")
         return redirect("carros:disponiveis")
@@ -57,7 +106,19 @@ def carro_editar(request, placa):
 
 @login_required
 def alugar_carro(request, placa):
-    """Atribui o carro ao usuário logado, se estiver disponível."""
+    """Atribui o carro ao usuário autenticado (inicia o aluguel).
+
+    Regras:
+    - Somente se o carro estiver disponível (``locatario`` nulo).
+    - Em sucesso, redireciona para a página de ``carros:alugados``.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+        placa (str): placa do veículo.
+
+    Returns:
+        HttpResponseRedirect: redireciona para `carros:alugados`` ou ``carros:disponiveis`` com mensagem.
+    """
     if request.method != "POST":
         return redirect("carros:disponiveis")
 
@@ -75,7 +136,14 @@ def alugar_carro(request, placa):
 
 @login_required
 def carros_alugados(request):
-    """Lista apenas os carros alugados pelo usuário logado."""
+    """Lista os carros alugados pelo usuário autenticado.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+
+    Returns:
+        HttpResponse: template ``carros/alugados.html`` com os carros do usuário.
+    """
     if request.user.is_admin:
         title = "Carros alugados"
         carros = Carro.objects.filter(locatario__isnull=False).order_by("marca", "modelo")
@@ -88,7 +156,22 @@ def carros_alugados(request):
 @login_required
 @require_POST
 def encerrar_aluguel(request, placa):
-    # Garante que só o dono (ou um admin) encerra
+    """Encerra o aluguel de um carro, removendo a vinculação com o usuário.
+
+    Permite:
+    - O próprio locatário encerrar o seu aluguel.
+    - Admin encerrar o aluguel de qualquer carro.
+
+    Em sucesso, o carro volta a aparecer na lista de disponíveis.
+
+    Args:
+        request (HttpRequest): requisição HTTP.
+        placa (str): placa do veículo.
+
+    Returns:
+        HttpResponseRedirect: redireciona para ``carros:disponiveis``.
+    """
+
     if request.user.is_staff:
         carro = get_object_or_404(Carro, placa=placa)
     else:
